@@ -1,0 +1,33 @@
+version: "3.8"
+services:
+
+  app:
+    image: weather-api    # The app's Docker image, built via Dockerfile
+    deploy:
+      replicas: 1              # The number of replicas for scaling
+      restart_policy:
+        condition: on-failure  # Restart only on failure for robustness
+    secrets:
+      - REDIS_HOST
+      - REDIS_PORT
+    environment:
+      SPRING_REDIS_HOST_FILE: /run/secrets/REDIS_HOST     # The Redis host secret
+      SPRING_REDIS_PORT_FILE: /run/secrets/REDIS_PORT     # The Redis port secret
+    ports:
+      - 8080:8080         # Expose port 8080 for the app
+
+  redis:
+    image: redis:latest   # Use the latest official Redis image
+    deploy:
+      replicas: 1              # The number of replicas for scaling
+      restart_policy:
+        condition: on-failure
+    ports:
+      - 6379:6379
+    working_dir: /app
+
+secrets:
+  REDIS_HOST:
+    external: true  # The secret for Redis host (created externally)
+  REDIS_PORT:
+    external: true   # The secret for Redis port (created externally)
