@@ -1,0 +1,12 @@
+#spring configuration
+spring:
+  application:
+    name: weather-api
+  data:
+    redis:
+      host: ${$REDDIS_HOST}
+      port: ${$REDDIS_PORT}
+
+#weather api key
+weather:
+  api-key: ${WEATHER_API_KEY}
