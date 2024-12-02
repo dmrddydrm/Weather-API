@@ -13,6 +13,7 @@ services:
     environment:
       SPRING_REDIS_HOST_FILE: /run/secrets/REDIS_HOST     # The Redis host secret
       SPRING_REDIS_PORT_FILE: /run/secrets/REDIS_PORT     # The Redis port secret
+      WEATHER_API_KEY_FILE: /run/secrets/WEATHER_API_KEY  # The Weather api key file
     ports:
       - 8080:8080         # Expose port 8080 for the app
 
@@ -31,3 +32,5 @@ secrets:
     external: true  # The secret for Redis host (created externally)
   REDIS_PORT:
     external: true   # The secret for Redis port (created externally)
+  WEATHER_API_KEY:
+    external: true   # The secret for API_KEY (created externally)
